@@ -1,7 +1,8 @@
 require('dotenv').config();
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '1.1.1.1']);
 const express = require('express');
 const mongoose = require('mongoose');
-   console.log('MONGO_URI is:', process.env.MONGO_URI);
 
 const app = express();
 app.use(express.json());
@@ -28,3 +29,6 @@ const paymentRoutes = require('./routes/paymentRoutes');
 app.use('/api/payments', paymentRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Book = require('../models/Book');
 const BorrowRecord = require('../models/BorrowRecord');
 const Reservation = require('../models/Reservation');
+const sendEmail = require('../utils/sendEmail');
+const User = require('../models/User');
 
 const LOAN_DAYS = 14;
 
@@ -83,6 +85,15 @@ exports.returnBook = async (req, res) => {
         if (nextInQueue) {
             nextInQueue.status = 'fulfilled';
             await nextInQueue.save({ session });
+
+            const notifiedStudent = await User.findById(nextInQueue.student).session(session);
+            const book = await Book.findById(record.book).session(session);
+
+            sendEmail(
+                notifiedStudent.email,
+                'You reserved book is ready!',
+                `Hi ${notifiedStudent.name}, the book "${book.title}" you reserved is now available for collection. Please visit the library within 3 days to collect it.`
+            );
         } else {
         const book = await Book.findById(record.book).session(session);
         book.availableQty += 1;
