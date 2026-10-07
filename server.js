@@ -19,14 +19,21 @@ const PORT = process.env.PORT || 5000;
 
 const bookRoutes = require('./routes/bookRoutes');
 app.use('/api/books', bookRoutes);
+
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes);
+
 const borrowRoutes = require('./routes/borrowRoutes');
 app.use('/api/borrow', borrowRoutes);
+
 const reservationRoutes = require('./routes/reservationRoutes');
 app.use('/api/reservations', reservationRoutes);
+
 const paymentRoutes = require('./routes/paymentRoutes');
 app.use('/api/payments', paymentRoutes);
+
+const recommendationRoutes = require('./routes/recommendationRoutes');
+app.use('/api/recommendations', recommendationRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
