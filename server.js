@@ -35,6 +35,9 @@ app.use('/api/payments', paymentRoutes);
 const recommendationRoutes = require('./routes/recommendationRoutes');
 app.use('/api/recommendations', recommendationRoutes);
 
+const analyticsRoutes = require('./routes/analyticsRoutes');
+app.use('/api/analytics', analyticsRoutes);
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
