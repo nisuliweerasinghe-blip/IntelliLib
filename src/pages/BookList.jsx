@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"; 
 import api from '../api/axiosInstance';
+import { useAuth } from '../context/AuthContext';
+
 
 function BookList() {
+    const { user, logout } = useAuth();
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -28,6 +31,7 @@ function BookList() {
     return (
         <div>
             <h1>Book Library Catalog</h1>
+            <button onClick={logout}>Log out ({user.name})</button>
             {books.length === 0 ? (
                 <p>No books available.</p>
             ) : (
