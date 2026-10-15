@@ -92,7 +92,7 @@
     outline-offset: 4px;
 }
 
-.me mber-card button[type='submit'] {
+.member-card button[type='submit'] {
     width: 100%;
     margin-top: 2rem;
     padding: 0.85rem 1rem;
@@ -109,23 +109,14 @@
     background: var(--secondary);
 }
 
-.member-card-button[type='submit']:focus-visible {
+.member-card button[type='submit']:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
 }
 
-.member-card-button[type='submit']:disabled {
+.member-card button[type='submit']:disabled {
     opacity: 0.6;
     cursor: wait;
-}
-
-.form-error {
-  margin: 1.25rem 0 0;
-  padding: 0.6rem 0.75rem;
-  font-size: 0.92rem;
-  color: #6B1F1F;
-  background: #F6E7E4;
-  border-left: 3px solid #9B2C2C;
 }
 
 .card-switch {

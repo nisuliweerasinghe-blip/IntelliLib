@@ -1,50 +1,87 @@
-import { useEffect, useState } from "react"; 
+import { useState, useEffect } from 'react';
 import api from '../api/axiosInstance';
-import { useAuth } from '../context/AuthContext';
-
+import BookRow from '../components/BookRow';
+import './BookList.css';
 
 function BookList() {
-    const { user, logout } = useAuth();
-    const [books, setBooks] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
+  const [onlyAvailable, setOnlyAvailable] = useState(false);
 
-    useEffect(() => {
-        const fetchBooks = async () => {
-            try {
-                const response = await api.get('/books');
-                setBooks(response.data);
-            } catch (err) {
-                console.error('Full error:', err);
-                setError('Failed to load books: ' + err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const res = await api.get('/books');
+        setBooks(res.data);
+      } catch (err) {
+        setError('Could not load the catalog. Check that the backend is running and try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        fetchBooks();
-    }, []);
+    fetchBooks();
+  }, []);
 
-    if (loading) return <p>Loading books...</p>;
-    if (error) return <p>{error}</p>;
+  const query = search.trim().toLowerCase();
 
-    return (
-        <div>
-            <h1>Book Library Catalog</h1>
-            <button onClick={logout}>Log out ({user.name})</button>
-            {books.length === 0 ? (
-                <p>No books available.</p>
-            ) : (
-                <ul>
-                    {books.map((book) => (
-                        <li key={book.id}>
-                            <strong>{book.title}</strong> by {book.author} - {book.availableQty}
-                        </li>
-                    ))}
-                </ul>
-            )}
+  const visibleBooks = books.filter((book) => {
+    const matchesSearch =
+      book.title.toLowerCase().includes(query) ||
+      book.author.toLowerCase().includes(query) ||
+      book.isbn.includes(query);
+    const matchesAvailability = !onlyAvailable || book.availableQty > 0;
+    return matchesSearch && matchesAvailability;
+  });
+
+  return (
+    <div>
+      <h1 className="page-title">Catalog</h1>
+      {!loading && !error && (
+        <p className="page-sub">{books.length} titles in the library</p>
+      )}
+
+      <div className="catalog-tools">
+        <div className="field">
+          <label htmlFor="search">Search by title, author or ISBN</label>
+          <input
+            id="search"
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
-    );
-} 
+
+        <label className="check">
+          <input
+            type="checkbox"
+            checked={onlyAvailable}
+            onChange={(e) => setOnlyAvailable(e.target.checked)}
+          />
+          Show only books on the shelf
+        </label>
+      </div>
+
+      {loading && <p className="status">Loading the catalog...</p>}
+      {error && <p className="form-error" role="alert">{error}</p>}
+
+      {!loading && !error && visibleBooks.length === 0 && (
+        <p className="status">
+          {books.length === 0
+            ? 'No books yet. A librarian can add the first one.'
+            : 'No books match your search. Try a different title, author, or ISBN.'}
+        </p>
+      )}
+
+      <ul className="book-list">
+        {visibleBooks.map((book) => (
+          <BookRow key={book._id} book={book} />
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default BookList;

@@ -1,0 +1,240 @@
+.page {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2rem) 4rem;
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--primary);
+}
+
+.page-sub {
+  margin: 0.25rem 0 0;
+  color: var(--text-muted);
+}
+
+.catalog-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.5rem 2.5rem;
+  margin: 2rem 0 1.5rem;
+}
+
+.catalog-tools .field {
+  flex: 1 1 18rem;
+}
+
+.catalog-tools .field label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--secondary);
+}
+
+.catalog-tools input[type='search'] {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.5rem 0;
+  font: inherit;
+  font-size: 1.05rem;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid var(--text);
+  border-radius: 0;
+}
+
+.catalog-tools input[type='search']:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.catalog-tools .check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.catalog-tools .check input {
+  accent-color: var(--primary);
+}
+
+.status {
+  margin: 2rem 0;
+  color: var(--text-muted);
+}
+
+.book-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1.5px solid var(--text);
+}
+
+.book-row {
+  position: relative;
+  padding: 1.4rem 0 1.4rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.book-row::before {
+  content: '';
+  position: absolute;
+  top: 1.4rem;
+  bottom: 1.4rem;
+  left: 0;
+  width: 6px;
+  border-radius: 2px;
+  background: var(--secondary);
+}
+
+.book-row.checked-out::before {
+  background: var(--accent);
+}
+
+.book-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+.book-info h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--primary);
+}
+
+.book-author {
+  margin: 0.2rem 0 0;
+  font-size: 1.02rem;
+}
+
+.book-isbn {
+  margin: 0.35rem 0 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.book-status {
+  text-align: right;
+}
+
+.copies {
+  margin: 0;
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+.checked-out .copies {
+  color: var(--text);
+}
+
+.book-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.btn-solid,
+.btn-line {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn-solid {
+  color: var(--background);
+  background: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+
+.btn-solid:hover:not(:disabled) {
+  background: var(--secondary);
+  border-color: var(--secondary);
+}
+
+.btn-solid:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.btn-line {
+  color: var(--primary);
+  background: transparent;
+  border: 1.5px solid var(--primary);
+}
+
+.btn-line:hover {
+  background: rgba(23, 63, 53, 0.08);
+}
+
+.btn-solid:focus-visible,
+.btn-line:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.row-note {
+  margin: 1rem 0 0;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.92rem;
+  color: var(--primary);
+  background: rgba(46, 107, 87, 0.1);
+  border-left: 3px solid var(--secondary);
+}
+
+.book-row .form-error {
+  margin-top: 1rem;
+}
+
+.qr-panel {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  background: #FFFDF8;
+  border: 1px solid var(--line);
+  border-top: 6px solid var(--accent);
+  border-radius: 4px;
+  animation: qr-open 220ms ease-out;
+}
+
+.qr-panel img {
+  display: block;
+}
+
+.qr-panel p {
+  margin: 0;
+  max-width: 24ch;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+@keyframes qr-open {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qr-panel { animation: none; }
+}
+
+@media (max-width: 600px) {
+  .book-status { text-align: left; }
+  .book-actions { justify-content: flex-start; }
+}

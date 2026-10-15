@@ -32,3 +32,13 @@ h1, h2, h3 {
 a {
   color: var(--secondary);
 }
+
+
+.form-error {
+  margin: 1.25rem 0 0;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.92rem;
+  color: #6B1F1F;
+  background: #F6E7E4;
+  border-left: 3px solid #9B2C2C;
+}
