@@ -1,0 +1,217 @@
+.desk-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 2rem 0 1.75rem;
+  border-bottom: 1.5px solid var(--text);
+}
+
+.desk-tabs button {
+  margin-bottom: -1.5px;
+  padding: 0.6rem 1.1rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: 0;
+  border-bottom: 4px solid transparent;
+  cursor: pointer;
+}
+
+.desk-tabs button:hover {
+  color: var(--primary);
+}
+
+.desk-tabs button[aria-selected='true'] {
+  color: var(--primary);
+  border-bottom-color: var(--accent);
+}
+
+.desk-tabs button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.desk-panel {
+  max-width: 34rem;
+}
+
+.scanner {
+  margin-bottom: 1.5rem;
+}
+
+.scanner-frame {
+  padding: 1rem;
+  background: #FFFDF8;
+  border: 1px solid var(--line);
+  border-top: 8px solid var(--accent);
+  border-radius: 4px;
+}
+
+#qr-reader {
+  width: 100%;
+}
+
+.scanner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-top: 0.75rem;
+}
+
+.scanner-hint {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.desk-field {
+  display: block;
+  margin-top: 1.25rem;
+}
+
+.desk-field span {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--secondary);
+}
+
+.desk-field input,
+.desk-field select {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.5rem 0;
+  font: inherit;
+  font-size: 1.05rem;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid var(--text);
+  border-radius: 0;
+}
+
+.desk-field input:focus-visible,
+.desk-field select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.manual {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.manual .desk-field {
+  flex: 1;
+  margin-top: 0;
+}
+
+.desk-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.picked {
+  margin: 0 0 1.25rem;
+  padding-left: 1.25rem;
+  border-left: 6px solid var(--secondary);
+}
+
+.picked h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.picked p {
+  margin: 0.2rem 0 0;
+}
+
+.slip {
+  margin: 0 0 1.75rem;
+  padding: 1.25rem 1.5rem;
+  background: #FFFDF8;
+  border-top: 2px dashed var(--text);
+  border-bottom: 2px dashed var(--text);
+}
+
+.slip h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.slip dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1.5rem;
+  margin: 0;
+}
+
+.slip dt {
+  color: var(--text-muted);
+}
+
+.slip dd {
+  margin: 0;
+  font-weight: 600;
+  border-bottom: 1px solid var(--line);
+}
+
+.loan-list {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1.5px solid var(--text);
+}
+
+.loan {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.loan-name {
+  margin: 0;
+  font-weight: 600;
+}
+
+.loan-due {
+  margin: 0.15rem 0 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.loan-due.late {
+  font-weight: 600;
+  color: #9B2C2C;
+}
+
+.qr-panel a.btn-line {
+  display: inline-block;
+  margin-top: 0.75rem;
+  text-decoration: none;
+}
+
+.row-note p {
+  margin: 0;
+}
+
+.row-note p + p {
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 600px) {
+  .manual { flex-direction: column; align-items: stretch; }
+}

@@ -4,6 +4,7 @@ import Register from './pages/Register';
 import BookList from './pages/BookList';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
+import Desk from './pages/Desk';
 
 function App() {
   return (
@@ -19,7 +20,15 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="/" element={<BookList />} />
+        <Route path="/" element={<BookList />} />
+        <Route
+          path="/desk"
+          element={
+            <ProtectedRoute roles={['librarian', 'admin']}>
+              <Desk />
+            </ProtectedRoute>
+          }
+        />
         </Route>
       </Routes>
     </BrowserRouter>

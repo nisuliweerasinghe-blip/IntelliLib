@@ -1,22 +1,3 @@
-.page {
-  max-width: 56rem;
-  margin: 0 auto;
-  padding: 2.5rem clamp(1rem, 4vw, 2rem) 4rem;
-}
-
-.page-title {
-  margin: 0;
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--primary);
-}
-
-.page-sub {
-  margin: 0.25rem 0 0;
-  color: var(--text-muted);
-}
-
 .catalog-tools {
   display: flex;
   flex-wrap: wrap;
@@ -65,11 +46,6 @@
 
 .catalog-tools .check input {
   accent-color: var(--primary);
-}
-
-.status {
-  margin: 2rem 0;
-  color: var(--text-muted);
 }
 
 .book-list {
@@ -147,91 +123,8 @@
   margin-top: 0.75rem;
 }
 
-.btn-solid,
-.btn-line {
-  padding: 0.5rem 1rem;
-  font: inherit;
-  font-weight: 600;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.btn-solid {
-  color: var(--background);
-  background: var(--primary);
-  border: 1.5px solid var(--primary);
-}
-
-.btn-solid:hover:not(:disabled) {
-  background: var(--secondary);
-  border-color: var(--secondary);
-}
-
-.btn-solid:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-.btn-line {
-  color: var(--primary);
-  background: transparent;
-  border: 1.5px solid var(--primary);
-}
-
-.btn-line:hover {
-  background: rgba(23, 63, 53, 0.08);
-}
-
-.btn-solid:focus-visible,
-.btn-line:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.row-note {
-  margin: 1rem 0 0;
-  padding: 0.6rem 0.75rem;
-  font-size: 0.92rem;
-  color: var(--primary);
-  background: rgba(46, 107, 87, 0.1);
-  border-left: 3px solid var(--secondary);
-}
-
 .book-row .form-error {
   margin-top: 1rem;
-}
-
-.qr-panel {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  margin-top: 1.25rem;
-  padding: 1rem;
-  background: #FFFDF8;
-  border: 1px solid var(--line);
-  border-top: 6px solid var(--accent);
-  border-radius: 4px;
-  animation: qr-open 220ms ease-out;
-}
-
-.qr-panel img {
-  display: block;
-}
-
-.qr-panel p {
-  margin: 0;
-  max-width: 24ch;
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-@keyframes qr-open {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .qr-panel { animation: none; }
 }
 
 @media (max-width: 600px) {

@@ -11,6 +11,9 @@ function Navbar() {
 
       <nav className="navbar-links">
         <NavLink to="/" end>Catalog</NavLink>
+        {(user.role === 'librarian' || user.role === 'admin') && (
+          <NavLink to="/desk">Desk</NavLink>
+        )}
       </nav>
 
       <div className="navbar-user">
