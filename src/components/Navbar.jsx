@@ -14,6 +14,7 @@ function Navbar() {
         {(user.role === 'librarian' || user.role === 'admin') && (
           <NavLink to="/desk">Desk</NavLink>
         )}
+        {user.role === 'student' && <NavLink to="/my-books">My books</NavLink>}
       </nav>
 
       <div className="navbar-user">
