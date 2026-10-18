@@ -115,3 +115,16 @@ exports.returnBook = async (req, res) => {
     }
 };      
 
+exports.getActiveBorrowsForBook = async (req, res) => {
+  try {
+    const { bookId } = req.params;
+
+    const records = await BorrowRecord.find({ book: bookId, status: 'issued' })
+      .populate('student', 'name email')
+      .sort({ dueDate: 1 });
+
+    res.status(200).json(records);
+  } catch (err) {
+    res.status(400).json({ error: 'Invalid book ID format' });
+  }
+};
