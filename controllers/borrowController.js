@@ -6,6 +6,7 @@ const sendEmail = require('../utils/sendEmail');
 const User = require('../models/User');
 
 const LOAN_DAYS = 14;
+const FINE_LIMIT = 500;
 
 exports.issueBook = async (req, res) => {
     const { bookId, studentId } = req.body;
@@ -22,6 +23,16 @@ exports.issueBook = async (req, res) => {
 
         if (book.availableQty < 1) {
             throw new Error('No copies available right now');
+        }
+
+        const student = await User.findById(studentId).session(session);
+        if (!student) {
+            throw new Error('Student not found');
+        }
+        if (student.outstandingFine > FINE_LIMIT) {
+            throw new Error(
+                `This student owes Rs.${student.outstandingFine} in fines. Fines above Rs.${FINE_LIMIT} must be paid before borrowing.`
+            );
         }
 
         book.availableQty -= 1;
@@ -75,11 +86,19 @@ exports.returnBook = async (req, res) => {
         record.fineAmount = fine;
         await record.save({ session });
 
+        if (fine > 0) {
+            await User.findByIdAndUpdate(
+                record.student,
+                { $inc: { outstandingFine: fine } },
+                { session }
+            );
+        }
+
         const nextInQueue = await Reservation.findOne({
             book: record.book,
             status: 'waiting'
         })
-        .sort({ queuePosition: 1 })
+        .sort({ requestedAt: 1 })
         .session(session);
 
         if (nextInQueue) {
@@ -126,5 +145,17 @@ exports.getActiveBorrowsForBook = async (req, res) => {
     res.status(200).json(records);
   } catch (err) {
     res.status(400).json({ error: 'Invalid book ID format' });
+  }
+};
+
+exports.getMyBorrows = async (req, res) => {
+  try {
+    const records = await BorrowRecord.find({ student: req.user.id })
+      .populate('book', 'title author')
+      .sort({ issuedAt: -1 });
+
+    res.status(200).json(records);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };

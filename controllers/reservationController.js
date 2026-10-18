@@ -1,4 +1,5 @@
 const Book = require('../models/Book');
+const BorrowRecord = require('../models/BorrowRecord');
 const Reservation = require('../models/Reservation');
 
 exports.reserveBook = async (req, res) => {
@@ -49,7 +50,7 @@ exports.getQueueForBook = async (req, res) => {
             book: bookId,
             status: 'waiting'
         })
-        .sort({ 'queuePosition': 1 })
+        .sort({ requestedAt: 1 })
         .populate('student', 'name email');
 
         res.status(200).json(queue);
@@ -60,14 +61,52 @@ exports.getQueueForBook = async (req, res) => {
 
 exports.getAllReservationsForBook = async (req, res) => {
     try {
-        const { bbokid } = req.params;
-
+        const { bookId } = req.params;
         const reservations = await Reservation.find({ book: bookId })
-            .sort({ 'queuePosition': 1 })
+            .sort({ requestedAt: 1 })
             .populate('student', 'name email');
 
         res.status(200).json(reservations);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+};
+
+exports.getMyReservations = async (req, res) => {
+  try {
+    const reservations = await Reservation.find({
+      student: req.user.id,
+      status: { $in: ['waiting', 'fulfilled'] }
+    })
+      .populate('book', 'title author')
+      .sort({ requestedAt: -1 });
+
+    const results = [];
+
+    for (const r of reservations) {
+      if (!r.book) continue;
+
+      if (r.status === 'waiting') {
+        const ahead = await Reservation.countDocuments({
+          book: r.book._id,
+          status: 'waiting',
+          requestedAt: { $lt: r.requestedAt }
+        });
+        results.push({ _id: r._id, book: r.book, status: 'waiting', position: ahead + 1 });
+      } else {
+        const collected = await BorrowRecord.exists({
+          student: req.user.id,
+          book: r.book._id,
+          issuedAt: { $gt: r.requestedAt }
+        });
+        if (!collected) {
+          results.push({ _id: r._id, book: r.book, status: 'ready' });
+        }
+      }
+    }
+
+    res.status(200).json(results);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };

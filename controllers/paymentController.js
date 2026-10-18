@@ -35,14 +35,19 @@ exports.recordPayment = async (req, res) => {
 };
 
 exports.getPaymentHistory = async (req, res) => {
-    try {
-        const { studentId } = req.params;
+  try {
+    const { studentId } = req.params;
 
-        const payments = await Payment.find({ student: studentId }).sort({ paidAt: -1 });
-
-        res.status(200).json(payments);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+    const isStaff = ['librarian', 'admin'].includes(req.user.role);
+    if (!isStaff && req.user.id !== studentId) {
+      return res.status(403).json({ error: 'You can only view your own payments' });
     }
+
+    const payments = await Payment.find({ student: studentId }).sort({ paidAt: -1 });
+
+    res.status(200).json(payments);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
