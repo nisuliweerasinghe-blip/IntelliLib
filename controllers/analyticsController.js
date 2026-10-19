@@ -100,6 +100,43 @@ exports.getDashboardSummary = async (req, res) => {
     }
 };
 
+const TIMEZONE = 'Asia/Colombo';
+
+exports.getActivity = async (req, res) => {
+  try {
+    const days = 14;
+    const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+
+    const rows = await BorrowRecord.aggregate([
+      { $match: { issuedAt: { $gte: since } } },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: '%Y-%m-%d', date: '$issuedAt', timezone: TIMEZONE }
+          },
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    const counts = {};
+    rows.forEach((row) => {
+      counts[row._id] = row.count;
+    });
+
+    const result = [];
+    for (let i = days - 1; i >= 0; i--) {
+      const day = new Date(Date.now() - i * 24 * 60 * 60 * 1000);
+      const date = day.toLocaleDateString('en-CA', { timeZone: TIMEZONE });
+      result.push({ date, count: counts[date] || 0 });
+    }
+
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 
 
 
