@@ -1,3 +1,4 @@
+/* Search and filter */
 .catalog-tools {
   display: flex;
   flex-wrap: wrap;
@@ -48,6 +49,7 @@
   accent-color: var(--primary);
 }
 
+/* The drawer of entries */
 .book-list {
   margin: 0;
   padding: 0;
@@ -83,6 +85,11 @@
   gap: 1rem 2rem;
 }
 
+.book-info {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
 .book-info h2 {
   margin: 0;
   font-size: 1.4rem;
@@ -103,6 +110,7 @@
 }
 
 .book-status {
+  margin-left: auto;
   text-align: right;
 }
 
@@ -118,6 +126,7 @@
 
 .book-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 0.6rem;
   margin-top: 0.75rem;
@@ -127,7 +136,44 @@
   margin-top: 1rem;
 }
 
-@media (max-width: 600px) {
-  .book-status { text-align: left; }
-  .book-actions { justify-content: flex-start; }
+/* Readers also borrowed */
+.also-panel {
+  margin-top: 1.25rem;
+  padding: 0.1rem 0 0 1rem;
+  border-left: 3px solid var(--secondary);
+  animation: qr-open 220ms ease-out;
+}
+
+.also-panel h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.also-panel ul {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.also-panel li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.also-title {
+  display: block;
+  font-weight: 600;
+}
+
+.also-author {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text-muted);
 }

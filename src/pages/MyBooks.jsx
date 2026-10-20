@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { formatDate } from '../utils/formatDate';
 import { dueStatus } from '../utils/dueStatus';
 import './MyBooks.css';
+import { FINE_LIMIT } from '../utils/constants';
 
 function MyBooks() {
   const { user } = useAuth();
@@ -55,8 +56,8 @@ function MyBooks() {
       {fine > 0 && (
         <div className="fine-notice" role="status">
           <p><strong>You owe Rs. {fine} in late fines.</strong> Pay at the library desk.</p>
-          {fine > 500 && (
-            <p>You cannot borrow more books until your fines are below Rs. 500.</p>
+          {fine > FINE_LIMIT && (
+            <p>You cannot borrow more books until your fines are Rs. {FINE_LIMIT} or less.</p>
           )}
         </div>
       )}

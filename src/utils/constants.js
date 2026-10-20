@@ -1,0 +1,1 @@
+export const FINE_LIMIT = 500;

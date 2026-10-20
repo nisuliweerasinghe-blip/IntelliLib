@@ -8,6 +8,11 @@ function BookRow({ book }) {
   const [reserving, setReserving] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
+  const [showAlso, setShowAlso] = useState(false);
+  const [also, setAlso] = useState(null);
+  const [alsoLoading, setAlsoLoading] = useState(false);
+  const [alsoError, setAlsoError] = useState('');
+
   const onShelf = book.availableQty > 0;
   const isStaff = user.role === 'librarian' || user.role === 'admin';
 
@@ -16,10 +21,7 @@ function BookRow({ book }) {
     setMessage({ type: '', text: '' });
 
     try {
-      const res = await api.post('/reservations', {
-        bookId: book._id,
-        studentId: user._id
-      });
+      const res = await api.post('/reservations', { bookId: book._id });
       setMessage({
         type: 'ok',
         text: `You are number ${res.data.queuePosition} in line. We will email you when it is ready.`
@@ -31,6 +33,25 @@ function BookRow({ book }) {
       });
     } finally {
       setReserving(false);
+    }
+  };
+
+  const toggleAlso = async () => {
+    const opening = !showAlso;
+    setShowAlso(opening);
+
+    if (!opening || also !== null) return;
+
+    setAlsoLoading(true);
+    setAlsoError('');
+
+    try {
+      const res = await api.get(`/recommendations/${book._id}`);
+      setAlso(res.data);
+    } catch (err) {
+      setAlsoError('Could not load suggestions. Hide this panel and open it again to retry.');
+    } finally {
+      setAlsoLoading(false);
     }
   };
 
@@ -56,6 +77,9 @@ function BookRow({ book }) {
                 {reserving ? 'Reserving...' : 'Reserve'}
               </button>
             )}
+            <button className="btn-line" onClick={toggleAlso} aria-expanded={showAlso}>
+              {showAlso ? 'Hide suggestions' : 'Readers also borrowed'}
+            </button>
             {isStaff && book.qrCode && (
               <button
                 className="btn-line"
@@ -73,6 +97,38 @@ function BookRow({ book }) {
         <p className={message.type === 'ok' ? 'row-note' : 'form-error'} role="status">
           {message.text}
         </p>
+      )}
+
+      {showAlso && (
+        <div className="also-panel">
+          <h3>Readers also borrowed</h3>
+
+          {alsoLoading && <p className="also-note">Looking through borrowing history...</p>}
+          {alsoError && <p className="form-error" role="alert">{alsoError}</p>}
+
+          {also && also.length === 0 && (
+            <p className="also-note">
+              No suggestions yet. They appear once people who borrowed this book have borrowed other titles.
+            </p>
+          )}
+
+          {also && also.length > 0 && (
+            <ul>
+              {also.map(({ book: other, count }) => (
+                <li key={other._id}>
+                  <div>
+                    <span className="also-title">{other.title}</span>
+                    <span className="also-author">{other.author}</span>
+                  </div>
+                  <div className="also-side">
+                    <p>{count} {count === 1 ? 'reader' : 'readers'} also borrowed it</p>
+                    <p>{other.availableQty > 0 ? 'On the shelf' : 'All copies are out'}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
 
       {showQr && (

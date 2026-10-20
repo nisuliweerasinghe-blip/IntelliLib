@@ -3,11 +3,13 @@ import IssuePanel from '../components/desk/IssuePanel';
 import ReturnPanel from '../components/desk/ReturnPanel';
 import AddBookPanel from '../components/desk/AddBookPanel';
 import './Desk.css';
+import FinePanel from '../components/desk/FinePanel';
 
 const TABS = [
   { id: 'issue', label: 'Issue a book' },
   { id: 'return', label: 'Return a book' },
-  { id: 'add', label: 'Add a book' }
+  { id: 'add', label: 'Add a book' },
+  { id: 'fines', label: 'Collect fines' }
 ];
 
 function Desk() {
@@ -35,6 +37,7 @@ function Desk() {
         {tab === 'issue' && <IssuePanel />}
         {tab === 'return' && <ReturnPanel />}
         {tab === 'add' && <AddBookPanel />}
+        {tab === 'fines' && <FinePanel />}
       </div>
     </div>
   );
