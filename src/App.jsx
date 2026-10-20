@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import Desk from './pages/Desk';
 import MyBooks from './pages/MyBooks';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -35,6 +36,14 @@ function App() {
             element={
               <ProtectedRoute roles={['student']}>
                 <MyBooks />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute roles={['librarian', 'admin']}>
+                <Dashboard />
               </ProtectedRoute>
             }
           />

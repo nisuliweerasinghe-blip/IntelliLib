@@ -4,6 +4,7 @@ import './Navbar.css';
 
 function Navbar() {
   const { user, logout } = useAuth();
+  const isStaff = user.role === 'librarian' || user.role === 'admin';
 
   return (
     <header className="navbar">
@@ -11,10 +12,13 @@ function Navbar() {
 
       <nav className="navbar-links">
         <NavLink to="/" end>Catalog</NavLink>
-        {(user.role === 'librarian' || user.role === 'admin') && (
-          <NavLink to="/desk">Desk</NavLink>
-        )}
         {user.role === 'student' && <NavLink to="/my-books">My books</NavLink>}
+        {isStaff && (
+          <>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/desk">Desk</NavLink>
+          </>
+        )}
       </nav>
 
       <div className="navbar-user">

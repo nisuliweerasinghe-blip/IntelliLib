@@ -1,0 +1,187 @@
+.dash-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+.dash-refresh {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.glance {
+  margin: 2rem 0 0;
+  padding: 0;
+  border-top: 1.5px solid var(--text);
+}
+
+.glance-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.glance dt {
+  font-size: 1.05rem;
+}
+
+.leader {
+  flex: 1;
+  border-bottom: 2px dotted rgba(36, 43, 39, 0.35);
+  transform: translateY(-0.3rem);
+}
+
+.glance dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--primary);
+}
+
+.glance-row.alert dd {
+  color: #9B2C2C;
+}
+
+.panel {
+  margin-top: 3.25rem;
+}
+
+.panel h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.panel-sub {
+  margin: 0.3rem 0 0;
+  color: var(--text-muted);
+}
+
+.chart {
+  margin-top: 1.25rem;
+}
+
+.calendar-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  max-width: 34rem;
+  margin-top: 1rem;
+}
+
+.weekday {
+  padding-bottom: 0.15rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 3.6rem;
+  padding: 0.3rem 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+.day-num {
+  font-size: 0.75rem;
+  color: var(--text);
+}
+
+.day-count {
+  align-self: flex-end;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.heat-1 { background: rgba(155, 44, 44, 0.14); }
+.heat-2 { background: rgba(155, 44, 44, 0.3); }
+.heat-3 { background: rgba(155, 44, 44, 0.55); }
+
+.heat-4 {
+  color: var(--background);
+  background: #9B2C2C;
+}
+
+.heat-4 .day-num {
+  color: var(--background);
+}
+
+.day.future {
+  opacity: 0.4;
+  border-style: dashed;
+}
+
+.day.today {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.overdue-list {
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1.5px solid var(--text);
+}
+
+.overdue-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.overdue-row h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--primary);
+}
+
+.overdue-row p {
+  margin: 0.15rem 0 0;
+}
+
+.overdue-side {
+  text-align: right;
+}
+
+.overdue-days {
+  font-weight: 600;
+  color: #9B2C2C;
+}
+
+.overdue-side a {
+  display: inline-block;
+  margin-top: 0.3rem;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .overdue-side { text-align: left; }
+  .glance dd { font-size: 1.6rem; }
+}
