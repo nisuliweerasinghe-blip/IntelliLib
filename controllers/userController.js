@@ -3,38 +3,47 @@ const User = require('../models/User');
 
 exports.registerUser = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const name = String(req.body.name ?? '').trim();
+    const email = String(req.body.email ?? '').trim().toLowerCase();
+    const password = String(req.body.password ?? '');
+
+    if (!name || !email || password.length < 6) {
+      return res.status(400).json({
+        error: 'Enter your name, an email, and a password of at least 6 characters'
+      });
+    }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-        return res.status(400).json({ error: 'Email already registered' });
+      return res.status(400).json({ error: 'Email already registered' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({ 
-      name, 
-      email, 
-      password: hashedPassword, 
-      role 
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: 'student'
     });
- 
+
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
       role: user.role
     });
-} catch (err) {
+  } catch (err) {
     res.status(400).json({ error: err.message });
-  } 
+  }
 };
 
 const jwt = require('jsonwebtoken');
 
 exports.loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const email = String(req.body.email ?? '').trim().toLowerCase();
+    const password = String(req.body.password ?? '');
 
     const user = await User.findOne({ email });
     if (!user) {
@@ -86,5 +95,43 @@ exports.getMe = async (req, res) => {
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+exports.createStaffAccount = async (req, res) => {
+  try {
+    const name = String(req.body.name ?? '').trim();
+    const email = String(req.body.email ?? '').trim().toLowerCase();
+    const password = String(req.body.password ?? '');
+    const { role } = req.body;
+
+    if (!name || !email || password.length < 6) {
+      return res.status(400).json({
+        error: 'Enter a name, an email, and a password of at least 6 characters'
+      });
+    }
+
+    if (!['librarian', 'admin'].includes(role)) {
+      return res.status(400).json({ error: 'Role must be librarian or admin' });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email already registered' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({ name, email, password: hashedPassword, role });
+
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      outstandingFine: user.outstandingFine
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };
