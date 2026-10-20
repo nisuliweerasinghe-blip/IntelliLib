@@ -4,11 +4,12 @@ const Reservation = require('../models/Reservation');
 
 exports.reserveBook = async (req, res) => {
     try {
-        const { bookId, studentId } = req.body;
+        const { bookId } = req.body;
+        const studentId = req.user.id;
 
         const book = await Book.findById(bookId);
         if (!book) {
-            return res.status(404).json({ message: 'Book not found' });
+            return res.status(404).json({ error: 'Book not found' });
         }
 
         if(book.availableQty > 0) {
