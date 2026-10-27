@@ -8,6 +8,7 @@ import Desk from './pages/Desk';
 import MyBooks from './pages/MyBooks';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
+import Account from './pages/Account';
 
 function App() {
   return (
@@ -55,7 +56,13 @@ function App() {
                 <Admin />
               </ProtectedRoute>
             }
-          />  
+          /> 
+          <Route 
+            path="/account" 
+            element={
+              <Account />
+            } 
+          /> 
         </Route>
       </Routes>
     </BrowserRouter>

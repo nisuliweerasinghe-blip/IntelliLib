@@ -23,7 +23,7 @@ function Navbar() {
       </nav>
 
       <div className="navbar-user">
-        <span>{user.name}</span>
+        <NavLink to="/account">{user.name}</NavLink>
         <span className="navbar-role">{user.role}</span>
         <button onClick={logout}>Log out</button>
       </div>

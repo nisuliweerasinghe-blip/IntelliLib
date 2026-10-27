@@ -75,3 +75,14 @@
   .navbar { flex-wrap: wrap; gap: 0.75rem; }
   .navbar-user { margin-left: auto; }
 }
+
+.navbar-user a {
+  color: var(--background);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(247, 244, 236, 0.5);
+}
+
+.navbar-user a.active {
+  text-decoration-color: var(--accent);
+}

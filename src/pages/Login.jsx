@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
 function Login() {
     const { login } = useAuth();
     const navigate = useNavigate();
+    const [params] = useSearchParams();
+    const sessionEnded = params.get('reason') === 'session';
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -44,6 +46,11 @@ function Login() {
                 <form className="member-card" onSubmit={handleSubmit}>
                     <h2>Member Card</h2>
                     <p className="card-hint">Sign in with the email you registered with.</p>
+                    {sessionEnded && !error && (
+                        <p className="row-note" role="status">
+                            Your session ended. Sign in again to continue.
+                        </p>
+              )}
 
                     <label htmlFor="email">Email</label>
                     <input
