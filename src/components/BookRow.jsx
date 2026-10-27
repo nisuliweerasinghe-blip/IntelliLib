@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import api from '../api/axiosInstance';
 import { useAuth } from '../context/AuthContext';
+import StaffTools from './StaffTools';
 
-function BookRow({ book }) {
+function BookRow({ book, onUpdated, onDeleted }) {
   const { user } = useAuth();
   const [showQr, setShowQr] = useState(false);
   const [reserving, setReserving] = useState(false);
@@ -136,6 +137,15 @@ function BookRow({ book }) {
           <img src={book.qrCode} alt={`QR code for ${book.title}`} width="160" height="160" />
           <p>Scan this at the counter to issue or return this book.</p>
         </div>
+      )}
+
+      {isStaff && (
+        <StaffTools
+          book={book}
+          canDelete={user.role === 'admin'}
+          onUpdated={onUpdated}
+          onDeleted={onDeleted}
+        />
       )}
     </li>
   );

@@ -19,6 +19,7 @@ function Navbar() {
             <NavLink to="/desk">Desk</NavLink>
           </>
         )}
+        {user.role === 'admin' && <NavLink to="/admin">Admin</NavLink>}
       </nav>
 
       <div className="navbar-user">

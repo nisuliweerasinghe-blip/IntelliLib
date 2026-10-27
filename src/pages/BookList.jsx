@@ -36,6 +36,14 @@ function BookList() {
     return matchesSearch && matchesAvailability;
   });
 
+  const handleUpdated = (updated) => {
+    setBooks((list) => list.map((b) => (b._id === updated._id ? updated : b)));
+  };
+
+  const handleDeleted = (id) => {
+    setBooks((list) => list.filter((b) => b._id !== id));
+  };
+
   return (
     <div>
       <h1 className="page-title">Catalog</h1>
@@ -77,7 +85,12 @@ function BookList() {
 
       <ul className="book-list">
         {visibleBooks.map((book) => (
-          <BookRow key={book._id} book={book} />
+          <BookRow
+            key={book._id}
+            book={book}
+            onUpdated={handleUpdated}
+            onDeleted={handleDeleted}
+          />
         ))}
       </ul>
     </div>
@@ -85,3 +98,9 @@ function BookList() {
 }
 
 export default BookList;
+
+
+
+
+
+

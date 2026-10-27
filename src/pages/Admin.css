@@ -1,0 +1,61 @@
+.admin-section {
+  margin-top: 3rem;
+}
+
+.admin-section h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.admin-form {
+  max-width: 34rem;
+  margin-top: 0.5rem;
+}
+
+.admin-section .slip {
+  max-width: 34rem;
+  margin-top: 1.25rem;
+}
+
+.admin-count {
+  margin: 0.3rem 0 0;
+  color: var(--text-muted);
+}
+
+.admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem 2rem;
+  margin: 1.25rem 0 1.5rem;
+}
+
+.admin-filters .desk-field {
+  flex: 1 1 14rem;
+  margin-top: 0;
+}
+
+.role-tag {
+  flex: none;
+  padding: 0.1rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+}
+
+.role-tag.admin {
+  color: var(--background);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.role-tag.librarian {
+  color: var(--secondary);
+}
+
+.role-tag.student {
+  color: var(--text-muted);
+}

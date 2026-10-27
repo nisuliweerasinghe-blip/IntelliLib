@@ -7,6 +7,7 @@ import Layout from './components/Layout';
 import Desk from './pages/Desk';
 import MyBooks from './pages/MyBooks';
 import Dashboard from './pages/Dashboard';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -47,6 +48,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute roles={['admin']}>
+                <Admin />
+              </ProtectedRoute>
+            }
+          />  
         </Route>
       </Routes>
     </BrowserRouter>
