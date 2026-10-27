@@ -135,3 +135,43 @@ exports.createStaffAccount = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+exports.changePassword = async (req, res) => {
+  try {
+    const currentPassword = String(req.body.currentPassword ?? '');
+    const newPassword = String(req.body.newPassword ?? '');
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: 'The new password must be at least 6 characters' });
+    }
+    if (newPassword === currentPassword) {
+      return res.status(400).json({
+        error: 'Choose a new password that is different from the current one'
+      });
+    }
+
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const matches = await bcrypt.compare(currentPassword, user.password);
+    if (!matches) {
+      return res.status(400).json({ error: 'The current password is not correct' });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    user.passwordChangedAt = new Date();
+    await user.save();
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.status(200).json({ message: 'Password changed', token });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};

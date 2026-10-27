@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
     outstandingFine: {
         type: Number,
         default: 0
+    },
+    passwordChangedAt: { 
+        type: Date 
     }
 });
 
