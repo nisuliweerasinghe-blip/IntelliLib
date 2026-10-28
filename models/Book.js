@@ -26,6 +26,11 @@ const bookSchema = new mongoose.Schema({
     },
     qrCode: {
         type: String,
+    },
+    category: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Category', 
+        default: null 
     }
 });
 

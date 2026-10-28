@@ -2,13 +2,23 @@ const QRCode = require('qrcode');
 const Book = require('../models/Book');
 const BorrowRecord = require('../models/BorrowRecord');
 const Reservation = require('../models/Reservation');
+const mongoose = require('mongoose');
+const Category = require('../models/Category');
+
+async function resolveCategory(value) {
+  if (!value) return { ok: true, id: null };
+  if (!mongoose.isValidObjectId(value)) return { ok: false };
+
+  const exists = await Category.exists({ _id: value });
+  return exists ? { ok: true, id: value } : { ok: false };
+}
 
 exports.createBook = async (req, res) => {
   try {
     const title = String(req.body.title ?? '').trim();
     const author = String(req.body.author ?? '').trim();
     const isbn = String(req.body.isbn ?? '').trim();
-    const totalQty = Number(req.body.totalQty ?? 1);
+    const totalQty = Number(req.body.totalQty);
 
     if (!title || !author || !isbn) {
       return res.status(400).json({ error: 'Title, author, and ISBN are all required' });
@@ -17,16 +27,23 @@ exports.createBook = async (req, res) => {
       return res.status(400).json({ error: 'Number of copies must be a whole number, 1 or more' });
     }
 
+    const cat = await resolveCategory(req.body.category);
+    if (!cat.ok) {
+      return res.status(400).json({ error: 'Choose a category from the list' });
+    }
+
     const book = await Book.create({
       title,
       author,
       isbn,
       totalQty,
-      availableQty: totalQty
+      availableQty: totalQty,
+      category: cat.id
     });
 
     book.qrCode = await QRCode.toDataURL(book._id.toString());
     await book.save();
+    await book.populate('category', 'name');
 
     res.status(201).json(book);
   } catch (err) {
@@ -55,7 +72,7 @@ exports.getBookById = async (req, res) => {
 
 exports.getAllBooks = async (req, res) => {
     try {
-        const books = await Book.find();
+        const books = await Book.find().populate('category', 'name');
         res.status(200).json(books);
     }   catch (err) {
         res.status(500).json({ error: err.message });
@@ -69,6 +86,10 @@ exports.updateBook = async (req, res) => {
     const author = String(req.body.author ?? '').trim();
     const isbn = String(req.body.isbn ?? '').trim();
     const totalQty = Number(req.body.totalQty);
+    const cat = await resolveCategory(req.body.category);
+    if (!cat.ok) {
+      return res.status(400).json({ error: 'Choose a category from the list' });
+    }
 
     if (!title || !author || !isbn) {
       return res.status(400).json({ error: 'Title, author, and ISBN are all required' });
@@ -91,11 +112,11 @@ exports.updateBook = async (req, res) => {
         availableQty: { $gte: Math.max(0, -change) }
       },
       {
-        $set: { title, author, isbn },
+        $set: { title, author, isbn, category: cat.id },
         $inc: { totalQty: change, availableQty: change }
       },
       { new: true, runValidators: true }
-    );
+    ).populate('category', 'name');
 
     if (!updated) {
       const fresh = await Book.findById(id);

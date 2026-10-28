@@ -46,6 +46,7 @@ app.use('/api/reservations', require('./routes/reservationRoutes'));
 app.use('/api/payments', require('./routes/paymentRoutes'));
 app.use('/api/recommendations', require('./routes/recommendationRoutes'));
 app.use('/api/analytics', require('./routes/analyticsRoutes'));
+app.use('/api/categories', require('./routes/categoryRoutes'));
 
 app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
