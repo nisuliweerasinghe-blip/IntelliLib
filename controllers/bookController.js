@@ -4,29 +4,37 @@ const BorrowRecord = require('../models/BorrowRecord');
 const Reservation = require('../models/Reservation');
 
 exports.createBook = async (req, res) => {
-    try {
-        const { title, author, isbn, totalQty } = req.body;
+  try {
+    const title = String(req.body.title ?? '').trim();
+    const author = String(req.body.author ?? '').trim();
+    const isbn = String(req.body.isbn ?? '').trim();
+    const totalQty = Number(req.body.totalQty ?? 1);
 
-        const book = await Book.create({
-            title,
-            author,
-            isbn,
-            totalQty,
-            availableQty: totalQty
-        });
-
-        const qrCode = await QRCode.toDataURL(book._id.toString());
-
-        book.qrCode = qrCode;
-        await book.save();
-
-        res.status(201).json(book);
-    } catch (err) {
-        if (err.code === 11000) {
-            return res.status(400).json({ error: 'Another book already uses this ISBN.' });
-        }
-        res.status(400).jsnon({ error: err.message });
+    if (!title || !author || !isbn) {
+      return res.status(400).json({ error: 'Title, author, and ISBN are all required' });
     }
+    if (!Number.isInteger(totalQty) || totalQty < 1) {
+      return res.status(400).json({ error: 'Number of copies must be a whole number, 1 or more' });
+    }
+
+    const book = await Book.create({
+      title,
+      author,
+      isbn,
+      totalQty,
+      availableQty: totalQty
+    });
+
+    book.qrCode = await QRCode.toDataURL(book._id.toString());
+    await book.save();
+
+    res.status(201).json(book);
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ error: 'Another book already uses this ISBN.' });
+    }
+    res.status(400).json({ error: err.message });
+  }
 };
 
 exports.getBookById = async (req, res) => {
@@ -129,10 +137,13 @@ exports.deleteBook = async (req, res) => {
       });
     }
 
-    const waiting = await Reservation.countDocuments({ book: id, status: 'waiting' });
-    if (waiting > 0) {
+    const activeReservations = await Reservation.countDocuments({
+      book: id,
+      status: { $in: ['waiting', 'ready'] }
+    });
+    if (activeReservations > 0) {
       return res.status(400).json({
-        error: `${waiting} ${waiting === 1 ? 'student is' : 'students are'} waiting for this book. Cancel their reservations before deleting it.`
+        error: `${activeReservations} ${activeReservations === 1 ? 'reservation is' : 'reservations are'} still active for this book. Wait until ${activeReservations === 1 ? 'it is' : 'they are'} collected, cancelled, or expired before deleting it.`
       });
     }
 

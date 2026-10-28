@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
+const { startHoldSweeper } = require('./utils/reservations');
 
 if (process.env.NODE_ENV !== 'production') {
   dns.setServers(['8.8.8.8', '1.1.1.1']);
@@ -65,9 +66,9 @@ mongoose
   .then(() => {
     console.log('MongoDB connected');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    startHoldSweeper();
   })
   .catch((err) => {
     console.error('Could not connect to MongoDB:', err.message);
     process.exit(1);
   });
-
