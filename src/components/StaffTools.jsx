@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import api from '../api/axiosInstance';
 
-function StaffTools({ book, canDelete, onUpdated, onDeleted }) {
+function StaffTools({ book, categories, canDelete, onUpdated, onDeleted }) {
   const [mode, setMode] = useState(null);
-  const [form, setForm] = useState({ title: '', author: '', isbn: '', totalQty: 1 });
+  const [form, setForm] = useState({ title: '', author: '', isbn: '', totalQty: 1, category: '' });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
@@ -18,7 +18,8 @@ function StaffTools({ book, canDelete, onUpdated, onDeleted }) {
       title: book.title,
       author: book.author,
       isbn: book.isbn,
-      totalQty: book.totalQty
+      totalQty: book.totalQty,
+      category: book.category?._id || ''
     });
     setError('');
     setMode('edit');
@@ -98,6 +99,16 @@ function StaffTools({ book, canDelete, onUpdated, onDeleted }) {
           <label className="desk-field">
             <span>ISBN</span>
             <input name="isbn" type="text" value={form.isbn} onChange={handleChange} required />
+          </label>
+
+          <label className="desk-field">
+            <span>Category</span>
+            <select name="category" value={form.category} onChange={handleChange}>
+              <option value="">No category</option>
+              {categories.map((c) => (
+                <option key={c._id} value={c._id}>{c.name}</option>
+              ))}
+            </select>
           </label>
 
           <label className="desk-field">

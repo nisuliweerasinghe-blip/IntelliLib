@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import api from '../../api/axiosInstance';
+import useCategories from '../../hooks/useCategories';
 
-const emptyForm = { title: '', author: '', isbn: '', totalQty: 1 };
+const emptyForm = { title: '', author: '', isbn: '', totalQty: 1, category: '' };
 
 function AddBookPanel() {
   const [form, setForm] = useState(emptyForm);
   const [added, setAdded] = useState(null);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const { categories, failed } = useCategories();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -59,6 +61,19 @@ function AddBookPanel() {
           <span>ISBN</span>
           <input name="isbn" type="text" value={form.isbn} onChange={handleChange} required />
         </label>
+
+        <label className="desk-field">
+          <span>Category</span>
+          <select name="category" value={form.category} onChange={handleChange}>
+            <option value="">No category</option>
+            {categories.map((c) => (
+              <option key={c._id} value={c._id}>{c.name}</option>
+            ))}
+          </select>
+        </label>
+        {failed && (
+          <p className="edit-hint">Could not load the categories, so this book will be saved without one.</p>
+        )}
 
         <label className="desk-field">
           <span>Number of copies</span>

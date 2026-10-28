@@ -262,3 +262,56 @@
     text-align: left;
   }
 }
+
+.drawers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.5rem;
+}
+
+.drawer {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--primary);
+  background: #FFFDF8;
+  border: 1px solid var(--text);
+  border-bottom-width: 3px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.drawer:hover {
+  background: rgba(23, 63, 53, 0.06);
+}
+
+.drawer[aria-pressed='true'] {
+  color: var(--background);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.drawer:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.drawer-count {
+  font-size: 0.82rem;
+  opacity: 0.75;
+}
+
+.book-isbn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1rem;
+}
+
+.book-cat {
+  font-weight: 600;
+  color: var(--secondary);
+}

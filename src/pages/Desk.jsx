@@ -4,12 +4,14 @@ import ReturnPanel from '../components/desk/ReturnPanel';
 import AddBookPanel from '../components/desk/AddBookPanel';
 import './Desk.css';
 import FinePanel from '../components/desk/FinePanel';
+import CategoryPanel from '../components/desk/CategoryPanel';
 
 const TABS = [
   { id: 'issue', label: 'Issue a book' },
   { id: 'return', label: 'Return a book' },
+  { id: 'fines', label: 'Collect fines' },
   { id: 'add', label: 'Add a book' },
-  { id: 'fines', label: 'Collect fines' }
+  { id: 'categories', label: 'Categories' }
 ];
 
 function Desk() {
@@ -38,6 +40,7 @@ function Desk() {
         {tab === 'return' && <ReturnPanel />}
         {tab === 'add' && <AddBookPanel />}
         {tab === 'fines' && <FinePanel />}
+        {tab === 'categories' && <CategoryPanel />}
       </div>
     </div>
   );

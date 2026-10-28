@@ -1,14 +1,21 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axiosInstance';
+import { useAuth } from '../context/AuthContext';
+import useCategories from '../hooks/useCategories';
 import BookRow from '../components/BookRow';
 import './BookList.css';
 
 function BookList() {
+  const { user } = useAuth();
+  const isStaff = user.role === 'librarian' || user.role === 'admin';
+  const { categories } = useCategories(isStaff);
+
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [onlyAvailable, setOnlyAvailable] = useState(false);
+  const [category, setCategory] = useState('all');
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -25,6 +32,25 @@ function BookList() {
     fetchBooks();
   }, []);
 
+  const groups = {};
+  books.forEach((book) => {
+    const key = book.category?._id || 'none';
+    if (!groups[key]) {
+      groups[key] = { id: key, name: book.category?.name || 'Uncategorised', count: 0 };
+    }
+    groups[key].count += 1;
+  });
+
+  const labels = Object.values(groups).sort((a, b) => {
+    if (a.id === 'none') return 1;
+    if (b.id === 'none') return -1;
+    return a.name.localeCompare(b.name);
+  });
+
+  const hasCategories = labels.some((l) => l.id !== 'none');
+
+  const activeCategory = category === 'all' || groups[category] ? category : 'all';
+
   const query = search.trim().toLowerCase();
 
   const visibleBooks = books.filter((book) => {
@@ -33,7 +59,11 @@ function BookList() {
       book.author.toLowerCase().includes(query) ||
       book.isbn.includes(query);
     const matchesAvailability = !onlyAvailable || book.availableQty > 0;
-    return matchesSearch && matchesAvailability;
+    const matchesCategory =
+      activeCategory === 'all' ||
+      (activeCategory === 'none' ? !book.category : book.category?._id === activeCategory);
+
+    return matchesSearch && matchesAvailability && matchesCategory;
   });
 
   const handleUpdated = (updated) => {
@@ -72,6 +102,31 @@ function BookList() {
         </label>
       </div>
 
+      {hasCategories && (
+        <div className="drawers" role="group" aria-label="Filter by category">
+          <button
+            type="button"
+            className="drawer"
+            aria-pressed={activeCategory === 'all'}
+            onClick={() => setCategory('all')}
+          >
+            All <span className="drawer-count">{books.length}</span>
+          </button>
+
+          {labels.map((label) => (
+            <button
+              key={label.id}
+              type="button"
+              className="drawer"
+              aria-pressed={activeCategory === label.id}
+              onClick={() => setCategory(label.id)}
+            >
+              {label.name} <span className="drawer-count">{label.count}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
       {loading && <p className="status">Loading the catalog...</p>}
       {error && <p className="form-error" role="alert">{error}</p>}
 
@@ -79,7 +134,7 @@ function BookList() {
         <p className="status">
           {books.length === 0
             ? 'No books yet. A librarian can add the first one.'
-            : 'No books match your search. Try a different title, author, or ISBN.'}
+            : 'No books match. Try a different search, category, or turn off the shelf filter.'}
         </p>
       )}
 
@@ -88,6 +143,7 @@ function BookList() {
           <BookRow
             key={book._id}
             book={book}
+            categories={categories}
             onUpdated={handleUpdated}
             onDeleted={handleDeleted}
           />
@@ -98,9 +154,3 @@ function BookList() {
 }
 
 export default BookList;
-
-
-
-
-
-

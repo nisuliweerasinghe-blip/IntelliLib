@@ -3,7 +3,7 @@ import api from '../api/axiosInstance';
 import { useAuth } from '../context/AuthContext';
 import StaffTools from './StaffTools';
 
-function BookRow({ book, onUpdated, onDeleted }) {
+function BookRow({ book, categories, onUpdated, onDeleted }) {
   const { user } = useAuth();
   const [showQr, setShowQr] = useState(false);
   const [reserving, setReserving] = useState(false);
@@ -62,7 +62,10 @@ function BookRow({ book, onUpdated, onDeleted }) {
         <div className="book-info">
           <h2>{book.title}</h2>
           <p className="book-author">{book.author}</p>
-          <p className="book-isbn">ISBN {book.isbn}</p>
+          <p className="book-isbn">
+            <span>ISBN {book.isbn}</span>
+            {book.category && <span className="book-cat">{book.category.name}</span>}
+          </p>
         </div>
 
         <div className="book-status">
@@ -142,6 +145,7 @@ function BookRow({ book, onUpdated, onDeleted }) {
       {isStaff && (
         <StaffTools
           book={book}
+          categories={categories}
           canDelete={user.role === 'admin'}
           onUpdated={onUpdated}
           onDeleted={onDeleted}
