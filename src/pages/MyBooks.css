@@ -128,3 +128,12 @@
     gap: 0.9rem;
   }
 }
+
+.ledger-row .btn-line {
+  flex: none;
+  margin-left: auto;
+}
+
+@media (max-width: 600px) {
+  .ledger-row .btn-line { margin-left: 0; }
+}

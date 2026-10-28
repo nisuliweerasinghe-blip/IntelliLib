@@ -221,3 +221,16 @@
 @media (max-width: 600px) {
   .manual { flex-direction: column; align-items: stretch; }
 }
+
+.held-title {
+  margin: 1.5rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.held-note {
+  margin: 0.3rem 0 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}

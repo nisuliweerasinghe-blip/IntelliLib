@@ -15,6 +15,8 @@ function MyBooks() {
   const [fine, setFine] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [cancellingId, setCancellingId] = useState('');
+  const [cancelError, setCancelError] = useState('');
 
   useEffect(() => {
     const load = async () => {
@@ -39,6 +41,20 @@ function MyBooks() {
 
     load();
   }, [user._id]);
+
+  const handleCancel = async (reservation) => {
+  setCancelError('');
+  setCancellingId(reservation._id);
+
+  try {
+    await api.delete(`/reservations/${reservation._id}`);
+    setReservations((list) => list.filter((r) => r._id !== reservation._id));
+  } catch (err) {
+    setCancelError(err.response?.data?.error || 'Could not cancel this reservation. Try again.');
+  } finally {
+    setCancellingId('');
+  }
+};
 
   const current = loans.filter((l) => l.status === 'issued');
   const past = loans.filter((l) => l.status === 'returned').slice(0, 10);
@@ -92,28 +108,46 @@ function MyBooks() {
 
       <section className="ledger">
         <h2>Reservations</h2>
-        {ready.length + waiting.length === 0 ? (
-          <p className="status">
-            You have no reservations. When a book is checked out, use Reserve in the catalog to join its waiting list.
-          </p>
-        ) : (
-          <ul className="ledger-list">
-            {[...ready, ...waiting].map((r) => (
-              <li key={r._id} className="ledger-row">
-                <div className="ledger-info">
-                  <h3>{r.book.title}</h3>
-                  <p>{r.book.author}</p>
-                  {r.status === 'ready' ? (
-                    <p className="due-text ok"><strong>Ready to collect.</strong> A copy is set aside for you at the library desk.</p>
-                  ) : (
-                    <p className="due-text">Number {r.position} in line. We will email you when it is ready.</p>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+
+          {cancelError && <p className="form-error" role="alert">{cancelError}</p>}
+
+          {ready.length + waiting.length === 0 ? (
+            <p className="status">
+              You have no reservations. When a book is checked out, use Reserve in the catalog to join its waiting list.
+            </p>
+          ) : (
+            <ul className="ledger-list">
+              {[...ready, ...waiting].map((r) => (
+                <li key={r._id} className="ledger-row">
+                  <div className="ledger-info">
+                    <h3>{r.book.title}</h3>
+                    <p>{r.book.author}</p>
+                    {r.status === 'ready' ? (
+                      <p className="due-text ok">
+                        <strong>Ready to collect.</strong> A copy is set aside for you at the library desk until{' '}
+                        {formatDate(r.holdUntil)}.
+                      </p>
+                    ) : (
+                      <p className="due-text">Number {r.position} in line. We will email you when it is ready.</p>
+                    )}
+                  </div>
+
+                  <button
+                    className="btn-line"
+                    onClick={() => handleCancel(r)}
+                    disabled={cancellingId === r._id}
+                  >
+                    {cancellingId === r._id
+                      ? 'Cancelling...'
+                      : r.status === 'ready'
+                        ? 'Give up this copy'
+                        : 'Leave the waiting list'}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
 
       {past.length > 0 && (
         <section className="ledger">
