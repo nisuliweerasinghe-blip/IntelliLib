@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Hanken+Grotesk:wght@400..700&display=swap');
+
+:root {
+  --primary: #173F35;
+  --secondary: #2E6B57;
+  --background: #F7F4EC;
+  --accent: #D8B77A;
+  --text: #242B27;
+  --text-muted: #5B655F;
+  --line: rgba(36, 43, 39, 0.18);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Hanken Grotesk', system-ui, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--background);
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+}
+
+a {
+  color: var(--secondary);
+}
+
+
+.form-error {
+  margin: 1.25rem 0 0;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.92rem;
+  color: #6B1F1F;
+  background: #F6E7E4;
+  border-left: 3px solid #9B2C2C;
+}
+
+.page {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2rem) 4rem;
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--primary);
+}
+
+.page-sub {
+  margin: 0.25rem 0 0;
+  color: var(--text-muted);
+}
+
+.status {
+  margin: 2rem 0;
+  color: var(--text-muted);
+}
+
+.btn-solid,
+.btn-line {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn-solid {
+  color: var(--background);
+  background: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+
+.btn-solid:hover:not(:disabled) {
+  background: var(--secondary);
+  border-color: var(--secondary);
+}
+
+.btn-solid:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.btn-line {
+  color: var(--primary);
+  background: transparent;
+  border: 1.5px solid var(--primary);
+}
+
+.btn-line:hover {
+  background: rgba(23, 63, 53, 0.08);
+}
+
+.btn-solid:focus-visible,
+.btn-line:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.row-note {
+  margin: 1rem 0 0;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.92rem;
+  color: var(--primary);
+  background: rgba(46, 107, 87, 0.1);
+  border-left: 3px solid var(--secondary);
+}
+
+.qr-panel {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  background: #FFFDF8;
+  border: 1px solid var(--line);
+  border-top: 6px solid var(--accent);
+  border-radius: 4px;
+  animation: qr-open 220ms ease-out;
+}
+
+.qr-panel img {
+  display: block;
+}
+
+.qr-panel p {
+  margin: 0;
+  max-width: 24ch;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+@keyframes qr-open {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qr-panel { animation: none; }
+}

@@ -1,0 +1,317 @@
+.catalog-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.5rem 2.5rem;
+  margin: 2rem 0 1.5rem;
+}
+
+.catalog-tools .field {
+  flex: 1 1 18rem;
+}
+
+.catalog-tools .field label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--secondary);
+}
+
+.catalog-tools input[type='search'] {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.5rem 0;
+  font: inherit;
+  font-size: 1.05rem;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid var(--text);
+  border-radius: 0;
+}
+
+.catalog-tools input[type='search']:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.catalog-tools .check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.catalog-tools .check input {
+  accent-color: var(--primary);
+}
+
+.book-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1.5px solid var(--text);
+}
+
+.book-row {
+  position: relative;
+  padding: 1.4rem 0 1.4rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.book-row::before {
+  content: '';
+  position: absolute;
+  top: 1.4rem;
+  bottom: 1.4rem;
+  left: 0;
+  width: 6px;
+  border-radius: 2px;
+  background: var(--secondary);
+}
+
+.book-row.checked-out::before {
+  background: var(--accent);
+}
+
+.book-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+.book-info {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
+.book-info h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--primary);
+}
+
+.book-author {
+  margin: 0.2rem 0 0;
+  font-size: 1.02rem;
+}
+
+.book-isbn {
+  margin: 0.35rem 0 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.book-status {
+  margin-left: auto;
+  text-align: right;
+}
+
+.copies {
+  margin: 0;
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+.checked-out .copies {
+  color: var(--text);
+}
+
+.book-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.book-row .form-error {
+  margin-top: 1rem;
+}
+
+.also-panel {
+  margin-top: 1.25rem;
+  padding: 0.1rem 0 0 1rem;
+  border-left: 3px solid var(--secondary);
+  animation: qr-open 220ms ease-out;
+}
+
+.also-panel h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.also-panel ul {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.also-panel li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.also-title {
+  display: block;
+  font-weight: 600;
+}
+
+.also-author {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.also-side {
+  font-size: 0.92rem;
+  text-align: right;
+}
+
+.also-side p {
+  margin: 0;
+}
+
+.also-note {
+  margin: 0.6rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.staff-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+}
+
+.btn-danger {
+  color: #9B2C2C;
+  border-color: #9B2C2C;
+}
+
+.btn-danger:hover {
+  background: rgba(155, 44, 44, 0.08);
+}
+
+.btn-solid.btn-danger-solid {
+  color: var(--background);
+  background: #9B2C2C;
+  border-color: #9B2C2C;
+}
+
+.btn-solid.btn-danger-solid:hover:not(:disabled) {
+  background: #7F2323;
+  border-color: #7F2323;
+}
+
+.edit-panel,
+.confirm-panel {
+  max-width: 34rem;
+  margin-top: 1.25rem;
+  padding: 0.25rem 0 0.5rem 1rem;
+  border-left: 3px solid var(--accent);
+  animation: qr-open 220ms ease-out;
+}
+
+.confirm-panel {
+  border-left-color: #9B2C2C;
+}
+
+.confirm-panel p {
+  margin: 0;
+}
+
+.edit-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .also-panel,
+  .edit-panel,
+  .confirm-panel {
+    animation: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .book-status {
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .book-actions {
+    justify-content: flex-start;
+  }
+
+  .also-side {
+    text-align: left;
+  }
+}
+
+.drawers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.5rem;
+}
+
+.drawer {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--primary);
+  background: #FFFDF8;
+  border: 1px solid var(--text);
+  border-bottom-width: 3px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.drawer:hover {
+  background: rgba(23, 63, 53, 0.06);
+}
+
+.drawer[aria-pressed='true'] {
+  color: var(--background);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.drawer:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.drawer-count {
+  font-size: 0.82rem;
+  opacity: 0.75;
+}
+
+.book-isbn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1rem;
+}
+
+.book-cat {
+  font-weight: 600;
+  color: var(--secondary);
+}

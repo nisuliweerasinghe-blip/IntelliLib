@@ -1,0 +1,146 @@
+.auth-page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+}
+
+.auth-intro {
+    background: var(--primary);
+    color: var(--background);
+    padding: clamp(2rem, 6vw, 5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.auth-brand{
+    margin: 0;
+    max-width: 14ch;
+    font-weight: 600;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: -0.02rem;
+}
+
+.auth-side {
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+}
+
+.member-card {
+    position: relative;
+    width: min(100%, 26rem);
+    padding: 2.25rem 2rem 2rem;
+    background: #FFFDF8;
+    border: 1px solid var(--line);
+    border-top: 10px solid var(--accent);
+    border-radius: 4px;
+    box-shadow: 0 18px 40px -24px rgba(23, 63, 53, 0.5);
+    animation: card-in 600ms ease-out both;
+}
+
+.member-card::before {
+    content: '';
+    position: absolute;
+    top: 1.1rem;
+    right: 1.25rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--background);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.member-card h2 {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.card-hint {
+    margin: 0.35rem 0 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.member-card label {
+    display: block;
+    margin-top: 1.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--secondary);
+}
+
+.member-card input {
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.5rem 0;
+    font: inherit;
+    font-size: 1.05rem;
+    color: var(--text);
+    background: transparent;
+    border: 0;
+    border-bottom: 1.5px solid var(--text);
+    border-radius: 0;
+}
+
+.member-card input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.member-card button[type='submit'] {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 0.85rem 1rem;
+    font: inherit;
+    font-weight:600;
+    color: var(--background);
+    background: var(--primary);
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.member-card button[type='submit']:hover:not(:disabled) {
+    background: var(--secondary);
+}
+
+.member-card button[type='submit']:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.member-card button[type='submit']:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.card-switch {
+  margin: 1.5rem 0 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.card-switch a {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(14px) rotate(-1.5deg); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .member-card { animation: none; }
+}
+
+@media (max-width: 800px) {
+  .auth-page { grid-template-columns: 1fr; }
+  .auth-intro { padding: 2.5rem 1.5rem; }
+  .auth-intro h1 { max-width: none; }
+}

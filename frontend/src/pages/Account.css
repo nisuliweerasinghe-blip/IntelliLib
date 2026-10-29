@@ -1,0 +1,38 @@
+.profile-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.6rem 2rem;
+  max-width: 34rem;
+  margin: 2rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1.5px solid var(--text);
+}
+
+.profile-list dt {
+  color: var(--text-muted);
+}
+
+.profile-list dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.account-section {
+  margin-top: 3rem;
+}
+
+.account-section h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.account-form {
+  max-width: 34rem;
+}
+
+.account-form .row-note {
+  margin-top: 1.25rem;
+}

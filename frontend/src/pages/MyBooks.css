@@ -1,0 +1,139 @@
+.fine-notice {
+  margin: 1.75rem 0 0;
+  padding: 0.9rem 1.1rem;
+  background: rgba(216, 183, 122, 0.22);
+  border-left: 4px solid var(--accent);
+}
+
+.fine-notice p {
+  margin: 0;
+}
+
+.fine-notice p + p {
+  margin-top: 0.3rem;
+}
+
+.ledger {
+  margin-top: 2.75rem;
+}
+
+.ledger h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.ledger-list {
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1.5px solid var(--text);
+}
+
+.ledger-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.ledger-info h3,
+.history-row h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--primary);
+}
+
+.ledger-info p,
+.history-row p {
+  margin: 0.2rem 0 0;
+}
+
+/* The due-date stamp */
+.stamp {
+  flex: none;
+  min-width: 9.75rem;
+  padding: 0.45rem 0.8rem;
+  text-align: center;
+  color: var(--secondary);
+  border: 2px solid var(--secondary);
+  border-radius: 3px;
+  transform: rotate(-2deg);
+}
+
+.stamp-label {
+  display: block;
+  font-size: 0.8rem;
+}
+
+.stamp-date {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.stamp.soon {
+  color: #7A5B14;
+  border-color: #7A5B14;
+}
+
+.stamp.late {
+  color: #9B2C2C;
+  border-color: #9B2C2C;
+}
+
+.due-text {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.due-text.ok {
+  color: var(--secondary);
+}
+
+.due-text.soon {
+  font-weight: 600;
+  color: #7A5B14;
+}
+
+.due-text.late {
+  font-weight: 600;
+  color: #9B2C2C;
+}
+
+/* Returned and payments */
+.history-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.history-row .due-text {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .ledger-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+}
+
+.ledger-row .btn-line {
+  flex: none;
+  margin-left: auto;
+}
+
+@media (max-width: 600px) {
+  .ledger-row .btn-line { margin-left: 0; }
+}
