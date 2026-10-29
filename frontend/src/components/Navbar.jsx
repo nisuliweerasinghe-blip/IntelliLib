@@ -8,7 +8,7 @@ function Navbar() {
 
   return (
     <header className="navbar">
-      <span className="navbar-brand">Smart Library</span>
+      <span className="navbar-brand">IntelliLib</span>
 
       <nav className="navbar-links">
         <NavLink to="/" end>Catalog</NavLink>

@@ -35,7 +35,7 @@ function Login() {
     return (
         <main className="auth-page">
             <section className="auth-intro">
-                <p className="auth-brand">Smart Library</p>
+                <p className="auth-brand">IntelliLib</p>
                 <h1>Your next book is already on the shelf.</h1>
                 <p className="auth-lead">
                     Search the catalog, reserve what is checked out, and see what you owe, all in one place.

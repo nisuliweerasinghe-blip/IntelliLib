@@ -33,7 +33,7 @@ function Register() {
     return (
         <main className="auth-page">
             <section className="auth-intro">
-                <p className="auth-brand">Smart Library</p>
+                <p className="auth-brand">IntelliLib</p>
                 <h1>One card opens every shelf.</h1>
                 <p className="auth-lead">
                     Register once to borrow books, join waiting lists, and get an email the moment a reserved book is ready.
