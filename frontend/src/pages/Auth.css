@@ -144,3 +144,17 @@
   .auth-intro { padding: 2.5rem 1.5rem; }
   .auth-intro h1 { max-width: none; }
 }
+
+.auth-art {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  max-height: 38vh;
+  margin-top: 1rem;
+  object-fit: contain;
+  object-position: left top;
+}
+
+@media (max-width: 800px) {
+  .auth-art { display: none; }
+}

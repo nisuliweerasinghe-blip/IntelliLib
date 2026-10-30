@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Auth.css';
+import shelf from '../assets/shelf.svg';
 
 function Login() {
     const { login } = useAuth();
@@ -40,6 +41,7 @@ function Login() {
                 <p className="auth-lead">
                     Search the catalog, reserve what is checked out, and see what you owe, all in one place.
                 </p>
+                <img className="auth-art" src={shelf} alt="" />
             </section>
 
             <section className="auth-side">

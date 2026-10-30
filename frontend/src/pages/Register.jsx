@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api/axiosInstance';
 import './Auth.css';
+import shelf from '../assets/shelf.svg';
 
 function Register() {
     const navigate = useNavigate();
@@ -38,6 +39,7 @@ function Register() {
                 <p className="auth-lead">
                     Register once to borrow books, join waiting lists, and get an email the moment a reserved book is ready.
                 </p>
+                <img className="auth-art" src={shelf} alt="" />
             </section>
 
             <section className="auth-side">
